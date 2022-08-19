@@ -31,6 +31,26 @@ struct CreateInitialViewModel {
     var alreadyHaveWalletButtonText: String {
         return R.string.localizable.gettingStartedAlreadyHaveWallet()
     }
+    
+    var watchButtonText: String {
+        return R.string.localizable.watch()
+    }
+    
+    var importButtonText: String {
+        return R.string.localizable.importWalletImportButtonTitle()
+    }
+    
+    var alreadyHaveWalletLabelAttributedString: NSAttributedString {
+        let font: UIFont = ScreenChecker().isNarrowScreen ? Fonts.regular(size: 12) : Fonts.regular(size: 14)
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .center
+
+        return .init(string: R.string.localizable.gettingStartedAlreadyHaveWallet(), attributes: [
+            .font: font,
+            .foregroundColor: UIColor.white,
+            .paragraphStyle: paragraph
+        ])
+    }
 
     var watchButtonTitle: String {
         return R.string.localizable.gettingStartedAlertSheetOptionWatchTitle()
