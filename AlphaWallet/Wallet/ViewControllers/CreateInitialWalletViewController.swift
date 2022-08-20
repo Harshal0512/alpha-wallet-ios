@@ -19,7 +19,18 @@ class CreateInitialWalletViewController: UIViewController {
         return imageView
     }()
     private let buttonsBar = VerticalButtonsBar(numberOfButtons: 1)
-    private let secondaryButtonsBar = HorizontalButtonsBar(configuration: .secondary(buttons: 2))
+    private lazy var watchButton: UIButton = {
+        let watchButton = UIButton()
+        watchButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        return watchButton
+    }()
+    private lazy var importButton: UIButton = {
+        let importButton = UIButton()
+        importButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        return importButton
+    }()
     private let dividerView = UIView()
     private lazy var alreadyHaveWalletLabel: UILabel = {
         let alreadyHaveWalletLabel = UILabel()
@@ -54,7 +65,8 @@ class CreateInitialWalletViewController: UIViewController {
         dividerView.translatesAutoresizingMaskIntoConstraints = false
         footerBar.addSubview(dividerView)
         footerBar.addSubview(alreadyHaveWalletLabel)
-        footerBar.addSubview(secondaryButtonsBar)
+        footerBar.addSubview(watchButton)
+        footerBar.addSubview(importButton)
 
         let footerBottomConstraint = footerBar.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         footerBottomConstraint.constant = -(UIApplication.shared.bottomSafeAreaHeight + 20)
@@ -80,10 +92,18 @@ class CreateInitialWalletViewController: UIViewController {
             alreadyHaveWalletLabel.trailingAnchor.constraint(equalTo: footerBar.trailingAnchor, constant: -20),
             alreadyHaveWalletLabel.topAnchor.constraint(equalTo: dividerView.bottomAnchor, constant: 16),
             
-            secondaryButtonsBar.topAnchor.constraint(equalTo: alreadyHaveWalletLabel.bottomAnchor, constant: 10),
-            secondaryButtonsBar.leadingAnchor.constraint(equalTo: footerBar.leadingAnchor, constant: 20),
-            secondaryButtonsBar.trailingAnchor.constraint(equalTo: footerBar.trailingAnchor, constant: -20),
-            secondaryButtonsBar.bottomAnchor.constraint(equalTo: footerBar.bottomAnchor),
+            watchButton.topAnchor.constraint(equalTo: alreadyHaveWalletLabel.bottomAnchor, constant: 16),
+            watchButton.leadingAnchor.constraint(equalTo: footerBar.leadingAnchor, constant: 20),
+            watchButton.bottomAnchor.constraint(equalTo: footerBar.bottomAnchor),
+            watchButton.heightAnchor.constraint(equalToConstant: 50),
+//            watchButton.widthAnchor.constraint(equalToConstant: 120.0),
+            
+            importButton.topAnchor.constraint(equalTo: watchButton.topAnchor),
+            importButton.leadingAnchor.constraint(equalTo: watchButton.trailingAnchor, constant: 20),
+            importButton.heightAnchor.constraint(equalToConstant: 50),
+            importButton.trailingAnchor.constraint(equalTo: footerBar.trailingAnchor, constant: -20),
+            importButton.widthAnchor.constraint(equalTo: watchButton.widthAnchor),
+//            importButton.widthAnchor.constraint(equalToConstant: 120.0),
 
             footerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -123,13 +143,19 @@ class CreateInitialWalletViewController: UIViewController {
         
         alreadyHaveWalletLabel.attributedText = viewModel.alreadyHaveWalletLabelAttributedString
         
-        let secondButton1 = secondaryButtonsBar.buttons[0]
-        secondButton1.setTitle(viewModel.watchButtonText, for: .normal)
-        secondButton1.addTarget(self, action: #selector(createWalletSelected), for: .touchUpInside)
+        watchButton.setAttributedTitle(viewModel.watchButtonText, for: .normal)
+        watchButton.addTarget(self, action: #selector(createWalletSelected), for: .touchUpInside)
+        watchButton.layer.cornerRadius = 25.0
+        watchButton.setBackgroundColor(UIColor.clear, forState: .normal)
+        watchButton.borderColor = UIColor.white
+        watchButton.borderWidth = 1.0
         
-        let secondButton2 = secondaryButtonsBar.buttons[1]
-        secondButton2.setTitle(viewModel.importButtonText, for: .normal)
-        secondButton2.addTarget(self, action: #selector(createWalletSelected), for: .touchUpInside)
+        importButton.setAttributedTitle(viewModel.importButtonText, for: .normal)
+        importButton.addTarget(self, action: #selector(createWalletSelected), for: .touchUpInside)
+        importButton.layer.cornerRadius = 25.0
+        importButton.setBackgroundColor(UIColor.clear, forState: .normal)
+        importButton.borderColor = UIColor.white
+        importButton.borderWidth = 1.0
         
 //        let alreadyHaveWalletButton = buttonsBar.buttons[1]
 //        alreadyHaveWalletButton.setTitle(viewModel.alreadyHaveWalletButtonText, for: .normal)
